@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Ho_Chi_Minh
 RUN apt-get update && apt-get install -y --no-install-recommends locales git apt-utils && \
   apt-get -y install --no-install-recommends python3 python3-pip python3-dev build-essential && \
-  apt -y install make cmake gcc g++ && \
+  apt -y install make cmake gcc g++ ffmpeg && \
   apt -y install libsndfile1-dev && \
   pip3 install --upgrade pip && \
   locale-gen en_US.UTF-8  && \
@@ -16,7 +16,6 @@ COPY  .  /src/
 # RUN pip3 install torch
 RUN pip3 install -r /src/requirements.txt && \
 	cd /src && make 
-    
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen

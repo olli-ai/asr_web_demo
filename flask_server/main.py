@@ -20,7 +20,10 @@ import json
 import soundfile as sf
 import time
 
-CHANNEL_IP = 'localhost:5001'
+SHOST = os.environ.get('SHOST', "localhost")
+SPORT = os.environ.get('SPORT', "5001")
+
+CHANNEL_IP = f"{SHOST}:{SPORT}"
 channel = grpc.insecure_channel(CHANNEL_IP)
 stub = stt_service_pb2_grpc.SttServiceStub(channel)
 app = Flask(__name__)
@@ -94,7 +97,7 @@ def index():
     # print(transcript)
     # print(total_time)
     return response
-
+    
 if __name__ == "__main__":
-    app.run(debug=True)
-    # app.run(host='0.0.0.0',port=8000)
+    # app.run(debug=True)
+    app.run(host='0.0.0.0',port=5000)

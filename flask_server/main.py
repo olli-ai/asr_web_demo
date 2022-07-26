@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from sre_constants import SRE_FLAG_DEBUG
+import os
+import time
+
+import flask
+import grpc
 from flask import Flask
 from flask import request
-from flask import render_template
-import flask
-
+from google.protobuf.json_format import MessageToDict
 from pydub import AudioSegment as am
-from scipy.io import wavfile
-import grpc
+
 # import the generated classes
 import stt_service_pb2
 import stt_service_pb2_grpc
-from google.protobuf.json_format import MessageToDict
 
-import soundfile as sf
-import time
 # from flask_cors import CORS, cross_origin
 
 # PORT=5000
@@ -27,6 +25,8 @@ CHANNEL_IP = f"{SHOST}:{SPORT}"
 channel = grpc.insecure_channel(CHANNEL_IP)
 stub = stt_service_pb2_grpc.SttServiceStub(channel)
 app = Flask(__name__)
+
+
 # CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -40,6 +40,8 @@ def gen(audio_bytes):
     )
     streaming_config = stt_service_pb2.RecognitionConfig(specification=specification)
     yield stt_service_pb2.StreamingRecognitionRequest(config=streaming_config, audio_content=audio_bytes)
+
+
 def run_transcription(audio_bytes):
     it = stub.StreamingRecognize(gen(audio_bytes))
     try:
@@ -54,6 +56,7 @@ def run_transcription(audio_bytes):
     except grpc._channel._Rendezvous as err:
         print('Error code %s, message: %s' % (err._state.code, err._state.details))
     return ""
+
 
 @app.route("/result", methods=['POST', 'GET'])
 # @cross_origin()
@@ -72,7 +75,7 @@ def index():
         audio = audio.set_channels(1)
 
         audio.export('audio.wav', format='wav')
-        
+
         # print(audio.shape)
 
         # data, samplerate = sf.read(file)
@@ -102,7 +105,8 @@ def index():
     # print(transcript)
     # print(total_time)
     return response
-    
+
+
 if __name__ == "__main__":
     # app.run(debug=True)
-    app.run(host='0.0.0.0',port=5000)
+    app.run(host='0.0.0.0', port=5000)

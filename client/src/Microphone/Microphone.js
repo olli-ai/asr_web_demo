@@ -115,7 +115,12 @@ export default function Microphone({ pushFile, pushRes }) {
             fd.append("audio_data", tempFile.blob, filename);
             // xhr.open("POST", "http://127.0.0.1:5000/result", true);
             // xhr.send(fd);
-            fetch("http://127.0.0.1:5000/result", {
+			
+			const host = process.env.CHOST || "asr-demo.iviet.com";
+			const port = process.env.CPORT || "443";
+			
+			var full_host = "https://" + host + ":" + port + "/result";
+            fetch(full_host, {
                 method: 'POST',
                 body: fd
 

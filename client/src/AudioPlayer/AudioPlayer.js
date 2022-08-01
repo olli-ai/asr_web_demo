@@ -95,27 +95,23 @@ function AudioPlayer({ pushRes }) {
     }, [tempFile]);
 
     useEffect(() => {
-        console.log("file", tempFile);
         if (tempFile) {
             wavesurfer.current.load(tempFile.blobURL);
-
-            console.log("blob", tempFile.blob);
 
             var fd = new FormData();
             var filename = new Date().toISOString();
             fd.append("audio_data", tempFile.blob, filename);
 
-            const host = process.env.CHOST || "asr-demo.iviet.com";
-            const port = process.env.CPORT || "443";
+            const host = process.env.REACT_APP_CHOST || "asr-demo.iviet.com";
+            const port = process.env.REACT_APP_CPORT || "443";
 			
-            var service_uri = "https://" + host + ":" + port + "/result";
+            var service_uri = host + ":" + port + "/result";
             fetch(service_uri, {
                 method: 'POST',
                 body: fd
 
             }).then(response => response.json())
                 .then(json => {
-                    console.log(json);
                     pushRes(json)
                 });
         }
@@ -153,10 +149,9 @@ function AudioPlayer({ pushRes }) {
         setTempFile(recordedBlob);
     };
 
-    // For debugging only
-    // const onData = recordedBlob => {
-    //     console.log("chunk of real-time data is: ", recordedBlob);
-    // };
+    const onData = recordedBlob => {
+        // console.log("chunk of real-time data is: ", recordedBlob);
+    };
 
     const startRecording = () => {
         setTempFile(null);

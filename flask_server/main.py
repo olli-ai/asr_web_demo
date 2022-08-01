@@ -14,9 +14,6 @@ from pydub import AudioSegment as am
 import stt_service_pb2
 import stt_service_pb2_grpc
 
-# from flask_cors import CORS, cross_origin
-
-# PORT=5000
 
 SHOST = os.environ.get('SHOST', "localhost")
 SPORT = os.environ.get('SPORT', "5001")
@@ -26,9 +23,6 @@ channel = grpc.insecure_channel(CHANNEL_IP)
 stub = stt_service_pb2_grpc.SttServiceStub(channel)
 app = Flask(__name__)
 
-
-# CORS(app)
-# app.config['CORS_HEADERS'] = 'Content-Type'
 
 def gen(audio_bytes):
     specification = stt_service_pb2.RecognitionSpec(
@@ -59,7 +53,6 @@ def run_transcription(audio_bytes):
 
 
 @app.route("/result", methods=['POST', 'GET'])
-# @cross_origin()
 def index():
     transcript = ""
     total_time = 0.0
@@ -76,37 +69,18 @@ def index():
 
         audio.export('audio.wav', format='wav')
 
-        # print(audio.shape)
-
-        # data, samplerate = sf.read(file)
-        # with io.BytesIO() as fio:
-        #     sf.write(
-        #         fio, 
-        #         audio, 
-        #         samplerate=16000,
-        #         subtype='PCM_16', 
-        #         format='wav'
-        #     )
-        #     data = fio.getvalue()
-
-        # with open(('audio.wav'), 'wb') as f:
-        #     f.write(audio)
         with open("audio.wav", "rb") as f:
             audio = f.read()
         start_time = time.time()
         transcript = run_transcription(audio)
         end_time = time.time()
         total_time = end_time - start_time
-        # response = flask.jsonify({'transcript': transcript, 'time': total_time})
-        # response.headers.add('Access-Control-Allow-Origin', '*')
-        # return response
+
     response = flask.jsonify({'cfm': {'transcript': transcript, 'time': round(total_time, 2)}})
     response.headers.add('Access-Control-Allow-Origin', '*')
-    # print(transcript)
-    # print(total_time)
+
     return response
 
 
 if __name__ == "__main__":
-    # app.run(debug=True)
     app.run(host='0.0.0.0', port=5000)

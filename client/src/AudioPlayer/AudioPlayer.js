@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ReactMic } from "react-mic";
 import WaveSurfer from "wavesurfer";
-// import uuidv4 from "uuid/dist/v4";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -10,7 +9,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import StopIcon from "@material-ui/icons/Stop";
 import ReplayIcon from "@material-ui/icons/Replay";
 
-import { green, red, blue } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
 
 import PauseIcon from "@material-ui/icons/Pause";
 import Grid from "@material-ui/core/Grid";
@@ -60,17 +59,13 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
     }
 }));
-/*
-avatar username ostalo layout sa grid
 
-*/
 function AudioPlayer({ pushRes }) {
     const wavesurfer = useRef(null);
 
     const [record, setRecord] = useState(false);
     const [tempFile, setTempFile] = React.useState(null);
 
-    const [playerReady, setPlayerReady] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
@@ -87,15 +82,6 @@ function AudioPlayer({ pushRes }) {
             normalize: true,
             responsive: true,
             fillParent: true
-        });
-
-        // const wav = require("./12346 3203.ogg");
-
-        // console.log("wav", wav);
-        // wavesurfer.current.load(wav);
-
-        wavesurfer.current.on("ready", () => {
-            setPlayerReady(true);
         });
 
         const handleResize = wavesurfer.current.util.debounce(() => {
@@ -115,13 +101,10 @@ function AudioPlayer({ pushRes }) {
 
             console.log("blob", tempFile.blob);
 
-            // var xhr = new XMLHttpRequest();
             var fd = new FormData();
             var filename = new Date().toISOString();
             fd.append("audio_data", tempFile.blob, filename);
-            // xhr.open("POST", "http://127.0.0.1:5000/result", true);
-            // xhr.send(fd);
-            // let headers = new Headers();
+
             const host = process.env.CHOST || "asr-demo.iviet.com";
             const port = process.env.CPORT || "443";
 			
@@ -170,9 +153,10 @@ function AudioPlayer({ pushRes }) {
         setTempFile(recordedBlob);
     };
 
-    const onData = recordedBlob => {
-        console.log("chunk of real-time data is: ", recordedBlob);
-    };
+    // For debugging only
+    // const onData = recordedBlob => {
+    //     console.log("chunk of real-time data is: ", recordedBlob);
+    // };
 
     const startRecording = () => {
         setTempFile(null);

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 function Result({ res }) {
-    const [ggasr, setGgasr] = useState('');
+    // const [ggasr, setGgasr] = useState('');
     const [time_cfm, setTime_cfm] = useState('');
-    const [kaldi, setKaldi] = useState('');
+    // const [kaldi, setKaldi] = useState('');
     const [cfm, setCfm] = useState('');
 
     useEffect(() => {

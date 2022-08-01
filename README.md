@@ -1,18 +1,49 @@
 # ASR MODEL DEPLOYMENT
 
-1. To run the Flask server run the following command in your terminal:
+## Server site
 
-    `cd flask_server`
+`cd flask_server`
 
-   * Install essential package:
+1. Create *.flaskenv* file:
+
+    Add the following configurations:
+
+        FLASK_APP=<name of the running file>
+
+        FLASK_ENV=<flask enviroment>
+
+        FLASK_RUN_HOST=<server host>
+
+        FLASK_RUN_PORT=<running port>
+
+2. Install essential package:
   
-        `pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
-    * Run the server site:
+3. Run the server site with the *.flaskenv* configuration:
 
-        `python main.py` or `flask run`
-2. To start the client site, please folow these commands:
+    `flask run`
 
-    `cd client`
+## Client site
 
-    `npm start`
+`cd client`
+
+1. Create enviroment configurations:
+
+    Create an `.env.development` file for development, `.env.production` file for production:
+
+    Add these two following variables:
+
+        REACT_APP_API_ENDPOINT=<the server endpoint>
+        
+        REACT_APP_ENV=<"dev" for development and "prod" for production>
+
+2. Install all the needed packages:
+
+   `npm install`
+
+3. Start the client site:
+
+    In development enviroment: `npm start`.
+
+    In production enviroment: `npm build`.

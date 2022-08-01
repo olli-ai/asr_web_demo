@@ -10,7 +10,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import StopIcon from "@material-ui/icons/Stop";
 import ReplayIcon from "@material-ui/icons/Replay";
 
-import { green, red, blue } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
 
 import PauseIcon from "@material-ui/icons/Pause";
 import Grid from "@material-ui/core/Grid";
@@ -70,7 +70,7 @@ function AudioPlayer({ pushRes }) {
     const [record, setRecord] = useState(false);
     const [tempFile, setTempFile] = React.useState(null);
 
-    const [playerReady, setPlayerReady] = useState(false);
+    // const [playerReady, setPlayerReady] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
@@ -94,9 +94,9 @@ function AudioPlayer({ pushRes }) {
         // console.log("wav", wav);
         // wavesurfer.current.load(wav);
 
-        wavesurfer.current.on("ready", () => {
-            setPlayerReady(true);
-        });
+        // wavesurfer.current.on("ready", () => {
+        //     setPlayerReady(true);
+        // });
 
         const handleResize = wavesurfer.current.util.debounce(() => {
             wavesurfer.current.empty();
@@ -115,15 +115,11 @@ function AudioPlayer({ pushRes }) {
 
             console.log("blob", tempFile.blob);
 
-            // var xhr = new XMLHttpRequest();
             var fd = new FormData();
             var filename = new Date().toISOString();
             fd.append("audio_data", tempFile.blob, filename);
-            // xhr.open("POST", "http://127.0.0.1:5000/result", true);
-            // xhr.send(fd);
-            // let headers = new Headers();
 
-            fetch("http://127.0.0.1:5000/result", {
+            fetch(process.env.REACT_APP_API_ENDPOINT + "/result", {
                 method: 'POST',
                 body: fd
 
@@ -168,7 +164,7 @@ function AudioPlayer({ pushRes }) {
     };
 
     const onData = recordedBlob => {
-        console.log("chunk of real-time data is: ", recordedBlob);
+        // console.log("chunk of real-time data is: ", recordedBlob);
     };
 
     const startRecording = () => {

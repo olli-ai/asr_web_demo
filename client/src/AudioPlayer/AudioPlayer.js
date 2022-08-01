@@ -118,8 +118,14 @@ function AudioPlayer({ pushRes }) {
             var fd = new FormData();
             var filename = new Date().toISOString();
             fd.append("audio_data", tempFile.blob, filename);
-
-            fetch(process.env.REACT_APP_API_ENDPOINT + "/result", {
+            // xhr.open("POST", "http://127.0.0.1:5000/result", true);
+            // xhr.send(fd);
+            // let headers = new Headers();
+            const host = process.env.CHOST || "asr-demo.iviet.com";
+            const port = process.env.CPORT || "443";
+			
+            var service_uri = "https://" + host + ":" + port + "/result";
+            fetch(service_uri, {
                 method: 'POST',
                 body: fd
 

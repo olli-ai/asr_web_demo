@@ -1,5 +1,8 @@
 pydub
 vosk==0.3.32
-espnet==0.10.6
 grpcio
 grpcio-tools
+
+Flask
+scipy
+soundfile

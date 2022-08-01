@@ -34,7 +34,9 @@
 
     Add these two following variables:
 
-        REACT_APP_API_ENDPOINT=<the server endpoint>
+        REACT_APP_CHOST=<the server host>
+
+        REATC_APP_CPORT=<the server running port>
         
         REACT_APP_ENV=<"dev" for development and "prod" for production>
 

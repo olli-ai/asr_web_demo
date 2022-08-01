@@ -1,10 +1,12 @@
 # ASR WEB DEMO CLIENT SIDE
 
-1. Copy and rename `.env.development` or `.env.production` to `.env` depends on your current environment
+Tested with `node` version `v18.4.0` and `npm` version `8.12.0`
 
-2. Install necessary packages: `npm install`
+**Step 1.** Copy and rename `.env.development` or `.env.production` to `.env` depends on your current environment
 
-3. Start the client server:
+**Step 2.** Install necessary packages: `npm install --force`
+
+**Step 3.** Start the client server:
 
 - Development mode: `npm start`
 

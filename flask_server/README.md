@@ -1,7 +1,9 @@
 # ASR WEB DEMO SERVER SIDE
 
-1. Copy and rename `.env.development` or `.env.production` to `.env` depends on your current environment
+Tested with `python 3.8`
 
-2. Install necessary packages: `pip install -r requirements.txt`
+**Step 1.** Copy and rename `.flaskenv.development` or `.flaskenv.production` to `.flaskenv` depends on your current environment
 
-3. Start the client server: `python main.py`
+**Step 2.** Install necessary packages: `pip install -r requirements.txt`
+
+**Step 3.** Start the client server: `python main.py`

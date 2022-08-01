@@ -10,15 +10,25 @@ from flask import request
 from google.protobuf.json_format import MessageToDict
 from pydub import AudioSegment as am
 
+# Load dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
 # import the generated classes
 import stt_service_pb2
 import stt_service_pb2_grpc
 
 
-SHOST = os.environ.get('SHOST', "localhost")
-SPORT = os.environ.get('SPORT', "5001")
+FLASK_RUN_HOST = os.environ.get('FLASK_RUN_HOST', "localhost")
+FLASK_RUN_PORT = os.environ.get('FLASK_RUN_PORT', "8000")
+FLASK_DEBUG_MODE = True if os.environ.get('FLASK_RUN_PORT') == "development" else False
 
-CHANNEL_IP = f"{SHOST}:{SPORT}"
+
+CONFORMER_HOST = os.environ.get('CONFORMER_HOST', "localhost")
+CONFORMER_PORT = os.environ.get('CONFORMER_PORT', "5001")
+
+
+CHANNEL_IP = f"{CONFORMER_HOST}:{CONFORMER_PORT}"
 channel = grpc.insecure_channel(CHANNEL_IP)
 stub = stt_service_pb2_grpc.SttServiceStub(channel)
 app = Flask(__name__)
@@ -83,4 +93,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host=FLASK_RUN_HOST, port=FLASK_RUN_PORT, debug=FLASK_DEBUG_MODE)

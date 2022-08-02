@@ -10,4 +10,4 @@ Tested with `node` version `v18.4.0` and `npm` version `8.12.0`
 
 - Development mode: `npm start`
 
-- Development mode: `npm build`
+- Production mode: `npm run build` **(Don't use this, currently not working)**

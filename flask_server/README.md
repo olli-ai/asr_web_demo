@@ -6,4 +6,4 @@ Tested with `python 3.8`
 
 **Step 2.** Install necessary packages: `pip install -r requirements.txt`
 
-**Step 3.** Start the client server: `python main.py`
+**Step 3.** Start the client server: `flask run`

@@ -2,7 +2,6 @@ pydub
 vosk==0.3.32
 grpcio
 grpcio-tools
-
 Flask
 scipy
 soundfile

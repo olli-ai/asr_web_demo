@@ -102,7 +102,7 @@ function AudioPlayer({ pushRes }) {
             var filename = new Date().toISOString();
             fd.append("audio_data", tempFile.blob, filename);
 
-            const host = process.env.REACT_APP_CHOST || "asr-demo.iviet.com";
+            const host = process.env.REACT_APP_CHOST || "https://asr-demo.iviet.com";
             const port = process.env.REACT_APP_CPORT || "443";
 			
             var service_uri = host + ":" + port + "/result";
